@@ -117,23 +117,6 @@ def Output_data_AllPatientsWithFourMetrics():
     Metric_ICPath = pd.DataFrame(
         data=Metric_ICPath, index=Patient_pid, columns=Patient_pid
     )
-    # Metric_BagsOfFindings_matched = Metric_BagsOfFindings.loc[
-    #     matched_patients_id, matched_patients_id
-    # ]
-    # Metric_AverageLinks_matched = Metric_AverageLinks.loc[
-    #     matched_patients_id, matched_patients_id
-    # ]
-    # Metric_AverageLinks_ICWeights_matched = Metric_AverageLinks_ICWeights.loc[
-    #     matched_patients_id, matched_patients_id
-    # ]
-    # Metric_ICPath_matched = Metric_ICPath.loc[matched_patients_id, matched_patients_id]
-
-    # Metric_BagsOfFindings = (Metric_BagsOfFindings.T + Metric_BagsOfFindings) * 0.5
-    # Metric_AverageLinks = (Metric_AverageLinks.T + Metric_AverageLinks) * 0.5
-    # Metric_AverageLinks_ICWeights = (
-    #     Metric_AverageLinks_ICWeights.T + Metric_AverageLinks_ICWeights
-    # ) * 0.5
-    # Metric_ICPath = (Metric_ICPath.T + Metric_ICPath) * 0.5
     print("--------Exporting now the Metrics--------")
     Metric_BagsOfFindings.to_csv(
         "output.keepme/Metric_BagsOfFindings.csv", index_label="pid"
@@ -145,20 +128,6 @@ def Output_data_AllPatientsWithFourMetrics():
         "output.keepme/Metric_AverageLinks_ICWeights.csv", index_label="pid"
     )
     Metric_ICPath.to_csv("output.keepme/Metric_ICPath.csv", index_label="pid")
-
-    # Metric_BagsOfFindings_matched.to_csv(
-    #     "output.keepme/Metric_BagsOfFindings_MatchedSelection.csv", index_label="pid"
-    # )
-    # Metric_AverageLinks_matched.to_csv(
-    #     "output.keepme/Metric_AverageLinks_MatchedSelection.csv", index_label="pid"
-    # )
-    # Metric_AverageLinks_ICWeights_matched.to_csv(
-    #     "output.keepme/Metric_AverageLinks_ICWeights_MatchedSelection.csv",
-    #     index_label="pid",
-    # )
-    # Metric_ICPath_matched.to_csv(
-    #     "output.keepme/Metric_ICPath_MatchedSelection.csv", index_label="pid"
-    # )
 
 
 def Metric_Similarity_Assistant():

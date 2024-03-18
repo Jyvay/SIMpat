@@ -123,16 +123,6 @@ def ShortestPath_Between2Nodes_alt_PathOfNodes(
     nodeIds = result["nodeIds"][
         0
     ]  # we select in the panda dataframe the entry corresponding to the path of nodes
-    # query = gds.run_cypher(
-    #     """
-    #             MATCH (n)-[r]->(m)
-    #             WHERE id(n) IN $List_id AND id(m) IN $List_id
-    #             RETURN DISTINCT id(r)
-    #             """,
-    #     {"List_id": nodeIds},
-    # )  # we want a list of relations id, not of nodes.
-    # id_relations = query["id(r)"]
-    # id_relations = id_relations.values.tolist()
     return nodeIds
 
 

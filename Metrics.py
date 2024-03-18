@@ -159,16 +159,6 @@ def InformationContent_RetrieveFromData(id_node: int):
 # RETURN InverseIC LIMIT 25
 
 
-# def AllPatients_WithTheirNodes():
-#     query = gds.run_cypher(
-#         """
-#         MATCH (n:Patient)--(m)
-#         RETURN id(n) AS id_patient, m.sctid AS code_snomed, m.FSN AS Label_FSN
-#         """
-#     )
-#     return query
-
-
 def Retrieve_Snomed_Labels():
     query = gds.run_cypher(
         """
@@ -211,17 +201,6 @@ def ShortestPath_Between2Nodes_WithICWeights(
         {"list": nodeIds},
     )
     IC_path = query["IC_path"][0]
-    # we select in the panda dataframe the entry corresponding to the path of nodes
-    # query = gds.run_cypher(
-    #             """
-    #             MATCH (n)-[r]->(m)
-    #             WHERE id(n) IN $List_id AND id(m) IN $List_id
-    #             RETURN DISTINCT id(r)
-    #             """,
-    #             {"List_id":nodeIds}
-    #             ) #we want a list of relations id, not of nodes.
-    # id_relations = query["id(r)"]
-    # id_relations = id_relations.values.tolist()
     return [nodeIds, IC_path]
 
 
@@ -389,72 +368,6 @@ def Table_for_Metric_Bags_of_Findings(table_shortest_path, List_of_patients: lis
     print(Does_Nodes_belong_to_Patients)
     return Does_Nodes_belong_to_Patients
 
-
-# def All_Metrics_SubFunction_For_Parallelism(
-#     Table_Bags_of_Findings_filtered,
-#     Dist_node_to_patient_filtered,
-#     Dist_node_to_patient_ICWeights_filtered,
-#     Dist_node_to_patient_ICPath_filtered,
-#     Union_Nodes_nb,
-#     IC_nodes,
-#     nodes_patient,
-#     patient_id,
-# ):
-#     Intersection_Nodes_nb = Table_Bags_of_Findings_filtered.set_index("id_nodes")
-
-#     Metric_BagsOfFindings_single_patient = Intersection_Nodes_nb / Union_Nodes_nb
-#     Metric_BagsOfFindings_single_patient = 1 - Metric_BagsOfFindings_single_patient
-
-#     # we retrieve the information content of the nodes
-#     mask = IC_nodes["id_nodes"].isin(nodes_patient)
-#     IC_nodes_patient = IC_nodes[mask]
-#     sum_of_weights = IC_nodes_patient["IC"].sum()
-
-#     # computation of the metric Average Links for a single patient (needs to be concatenated at the end)
-
-#     Metric_AverageLinks_single_patient = Dist_node_to_patient_filtered
-#     Metric_AverageLinks_single_patient.set_index("id_nodes", inplace=True)
-#     Metric_AverageLinks_single_patient = Metric_AverageLinks_single_patient.sum() / len(
-#         nodes_patient
-#     )
-
-#     # computation of the metric Average Links with IC weights for a single patient (needs to be concatenated at the end)
-#     Metric_AverageLinks_ICWeights_single_patient = Dist_node_to_patient_ICWeights
-#     # mask = Metric_AverageLinks_ICWeights_single_patient["id_nodes"].isin(nodes_patient) <-- can reuse the previous mask
-#     Metric_AverageLinks_ICWeights_single_patient = (
-#         Metric_AverageLinks_ICWeights_single_patient[mask]
-#     )
-
-#     Metric_AverageLinks_ICWeights_single_patient.set_index("id_nodes", inplace=True)
-#     Metric_AverageLinks_ICWeights_single_patient = (
-#         Metric_AverageLinks_ICWeights_single_patient.sum() / sum_of_weights
-#     )
-
-#     # computation of the metric Path distance IC weights for a single patient (needs to be concatenated at the end)
-#     Metric_ICPath_single_patient = Dist_node_to_patient_ICPath
-#     # mask = Metric_ICPath_single_patient["id_nodes"].isin(nodes_patient) <-- can reuse the previous mask
-#     Metric_ICPath_single_patient = Metric_ICPath_single_patient[mask]
-#     Metric_ICPath_single_patient.set_index("id_nodes", inplace=True)
-#     Metric_ICPath_single_patient = Metric_ICPath_single_patient.sum() / sum_of_weights
-
-#     # we append the result to the list (to be reunited at the end)
-#     Metric_BagsOfFindings_single_patient = Metric_BagsOfFindings_single_patient.tolist()
-
-#     Metric_AverageLinks_single_patient = Metric_AverageLinks_single_patient.tolist()
-
-#     Metric_AverageLinks_ICWeights_single_patient = (
-#         Metric_AverageLinks_ICWeights_single_patient.tolist()
-#     )
-
-#     Metric_ICPath_single_patient = Metric_ICPath_single_patient.tolist()
-#     return [
-#         Metric_BagsOfFindings_single_patient,
-#         Metric_AverageLinks_single_patient,
-#         Metric_AverageLinks_ICWeights_single_patient,
-#         Metric_ICPath_single_patient,
-#     ]
-
-
 def All_Metrics_optimized(List_of_patients: list[int]):
     # we first retrieve our data
     shortest_path_data = pd.read_csv(
@@ -473,12 +386,6 @@ def All_Metrics_optimized(List_of_patients: list[int]):
 
     # we then find the min. distance of each node to the patients set of nodes..
     print("-------Computing the min distances between nodes and patients-------")
-    # Dist_node_to_patient = pd.read_csv(
-    #     "output.keepme/Dist_node_to_patient.csv", index_col="id_nodes"
-    # )
-    # Dist_node_to_patient_ICPath = pd.read_csv(
-    #     "output.keepme/Dist_node_to_patient_ICPath.csv", index_col="id_nodes"
-    # )
 
     Table_Bags_of_Findings = Table_for_Metric_Bags_of_Findings(
         shortest_path_data, List_of_patients
@@ -637,20 +544,3 @@ def ShortestPathInterPatients_ICWeights(List_of_patients: list[int]):
     else:
         output = result
     return output
-
-
-def AllMetrics_2Patients_Output(Pair_of_Patients: list[int]):
-    Patient_1 = Pair_of_Patients[0]
-    Patient_2 = Pair_of_Patients[1]
-    # Metric_bags = Metric_BagsOfFindings(Patient_1, Patient_2)
-    # Metric_avLinks = Metric_AverageLinks(Patient_1, Patient_2)
-    # Metric_LinksWeighted = Metric_LinksWeightedByIC(Patient_1, Patient_2)
-    # Metric_PathDistanceWeighted = Metric_PathDistanceWeightedByIC(Patient_1, Patient_2)
-    result = [
-        Pair_of_Patients,
-        # Metric_bags,
-        # Metric_avLinks,
-        # Metric_LinksWeighted,
-        # Metric_PathDistanceWeighted,
-    ]
-    return result
