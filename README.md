@@ -6,7 +6,7 @@ Link for the default Neo4j db used HERE : https://drive.google.com/file/d/1NUY1U
 
 ## Metrics for comparing patient synthetic EHR graphs
 
-The goal of this project was to build metrics to compare two patient dataset, imported as graphs in the Neo4j database. The metrics are based on the paper 'Inter-patient distance metrics using snomed ct defining relationships.' by Melton and al. (2006). More informations about metrics can be found on section 4 of the Graph Project main report https://www.overleaf.com/read/hxgrctfytscq#251ad4.
+The goal of this project was to build metrics to compare two patient dataset, imported as graphs in the Neo4j database. The metrics are based on the paper 'Inter-patient distance metrics using snomed ct defining relationships.' by Melton and al. (2006).
 
 To obtain the Metrics, one needs to run in a sequential order the functions<br />
 
