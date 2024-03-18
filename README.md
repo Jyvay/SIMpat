@@ -1,6 +1,6 @@
-# Graph Project - JV Voegeli
+# Graph Project - Simed
 
-Here is the code done by Jean-Virgile Voegeli during his interniship at Simed.
+Here is the code done by Jean-Virgile Voegeli as member of the graph team at Simed, University of Geneva, Geneva University Hospitals.
 
 Link for the default Neo4j db used HERE : https://drive.google.com/file/d/1NUY1UT8bxvSfsrANeudnV2CN0t8FPFEr/view?usp=sharing
 
@@ -11,7 +11,7 @@ The goal of this project was to build metrics to compare two patient dataset, im
 To obtain the Metrics, one needs to run in a sequential order the functions<br />
 
 Output_data_ShortestPath_Node_to_Node(),<br />
-Output_data_ShortestPath_Node_to_Node_ICWeights(),<br /> <-- Please read remark below
+Output_data_ShortestPath_Node_to_Node_ICWeights(), <-- Please read remark below <br />
 Output_data_AllPatientsWithFourMetrics()<br />
 
 To make the generation of metric similarity simpler, an assistant has been created. to launch it, just run the function Metric_Similarity_Assistant() in the file 'Output_data.py'. The assistant will check if needed input are available before running a particular step mentionned above.
