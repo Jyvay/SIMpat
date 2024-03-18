@@ -1,0 +1,7 @@
+# Force ignore
+*ignoreme*
+output_filtered
+output.keepme
+input.keepme
+main.py
+.devcontainer/neo4j.keepme.dump
