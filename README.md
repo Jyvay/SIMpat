@@ -4,17 +4,9 @@ Here is the code done by Jean-Virgile Voegeli during his interniship at Simed.
 
 Link for the default Neo4j db used HERE : https://drive.google.com/file/d/1NUY1UT8bxvSfsrANeudnV2CN0t8FPFEr/view?usp=sharing
 
-## Shortest path between concepts of patient synthetic files
-
-For the first part, the task was to create a Neo4j database including Snomed CT browser and a generated synthetic patient dataset using Synthea. Then, the goal was to build functions to retrieve all distinct pair of nodes included in the synthetic patient files and to find the shortest path between them through Snomed CT, using Neo4j. At the same time, each relation used in the shortest path process had a counter added and updated each time that relation was part of a shortest path. For more information concerning this aspect of the project, please refer to section 3 of the Graph Project main report https://www.overleaf.com/read/hxgrctfytscq#251ad4.
-
-The code for this part is available in the file ShortestPathPatient.py and a csv output can be obtained using the function Output_data_ShortestPath_patients() from Output_data.py. This will create a csv file called 'Output_data_ShortestPath_patients.csv' in 'output.keepme' repository.
-
-The function ShortestPath_BetweenPatients_And_Counter_Update() in the file ShortestPathPatient.py is the main algorithm of the first part of this project. Running it will retrieve all patient files in the Neo4j database, prepare distinct pairs of nodes, run a shortest path algorithm, and finally will create and update according counters.
-
 ## Metrics for comparing patient synthetic EHR graphs
 
-The second part of the project was to build metrics to compare two patient dataset, imported as graphs in the Neo4j database. The metrics are based on the paper 'Inter-patient distance metrics using snomed ct defining relationships.' by Melton and al. (2006). More informations about metrics can be found on section 4 of the Graph Project main report https://www.overleaf.com/read/hxgrctfytscq#251ad4.
+The goal of this project was to build metrics to compare two patient dataset, imported as graphs in the Neo4j database. The metrics are based on the paper 'Inter-patient distance metrics using snomed ct defining relationships.' by Melton and al. (2006). More informations about metrics can be found on section 4 of the Graph Project main report https://www.overleaf.com/read/hxgrctfytscq#251ad4.
 
 To obtain the Metrics, one needs to run in a sequential order the functions<br />
 
